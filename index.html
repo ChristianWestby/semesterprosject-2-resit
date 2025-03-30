@@ -1,13 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kjæledyr App</title>
+</head>
+<body>
+  <div id="app">
+    <div class="filters">
+      <input type="text" id="searchInput" placeholder="Search by name..." />
+      <select id="speciesFilter">
+        <option value="">All catacories</option>
+        <option value="Cat">Cat</option>
+        <option value="Dog">Dog</option>
+        <option value="Fish">Fish</option>
+        <option value="Rabbit">Rabbit</option>
+        <option value="Rodent">Rodent</option>
+        <option value="Reptile">Reptile</option>
+      </select>
+    </div>
+    <ul id="pet-list" class="pet-list"></ul>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
 </html>
