@@ -1,5 +1,10 @@
 import './style.css';
-import { fetchAllPets } from './js/api/pets.js';
+import { fetchAllPets } from './utils/api.js';
+import { createNavbar } from './components/navbar.js';
+import { createLogo } from './components/logo.js';
+import { createFooter } from './components/footer.js';
+import { createHamburger } from './components/burgermenu.js';
+import { createPetCard } from './components/petCard.js';
 
 let allPets = [];
 

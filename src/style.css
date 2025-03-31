@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .pet-list {
   list-style: none;
   padding: 0;
