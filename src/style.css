@@ -2,24 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Behold kun layout-styling her */
 .pet-list {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1rem;
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
 }
 
 .pet-item {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 1rem;
-  background: #f9f9f9;
-  text-align: center;
-}
-
-.pet-item img {
-  border-radius: 8px;
-  max-width: 100%;
-  height: auto;
+  @apply bg-white rounded-lg shadow p-4 text-center;
 }
