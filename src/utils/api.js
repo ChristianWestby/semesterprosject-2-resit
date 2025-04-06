@@ -1,15 +1,10 @@
-// src/js/api/pets.js
+const API_BASE = "https://v2.api.noroff.dev/pets";
 
-const API_URL = "https://v2.api.noroff.dev/pets";
-
-
-export async function fetchAllPets() {
-  try {
-    const response = await fetch(API_URL);
-    const json = await response.json();
-    return json.data;
-  } catch (error) {
-    console.error("❌ Cant get the pets..:", error);
-    return [];
+export async function fetchPetById(id) {
+  const res = await fetch(`${API_BASE}/${id}`);
+  if (!res.ok) {
+    throw new Error("Failed to fetch pet by ID");
   }
+  const { data } = await res.json();
+  return data;
 }
