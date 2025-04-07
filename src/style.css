@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Behold kun layout-styling her */
-.pet-list {
-  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
-}
 
 .pet-item {
   @apply bg-white rounded-lg shadow p-4 text-center;
