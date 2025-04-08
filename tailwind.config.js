@@ -1,13 +1,13 @@
-export default {
+module.exports = {
   content: [
     "./index.html",
     "./account/**/*.html",
     "./admin/**/*.html",
     "./pet/**/*.html",
-    "./src/**/*.{js,ts,jsx,tsx}"
+    "./src/**/*.{js,ts}"
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};
