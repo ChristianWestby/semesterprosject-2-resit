@@ -1,9 +1,21 @@
+// src/admin/dashboard.js
 import { fetchAllPets } from "../utils/api.js";
+import { getToken, protectRoute } from "../utils/auth.js";
 
 export async function setupDashboard(app) {
+  protectRoute(); // ⛔️ Viser melding og redirecter hvis ikke innlogget
+
+  const token = getToken();
+  const userName = localStorage.getItem("name");
+  const userEmail = localStorage.getItem("email");
+
   app.innerHTML = `
-    <h1 class="text-2xl font-bold mb-6">Admin Dashboard</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="admin-pet-list"></div>
+    <div class="max-w-6xl mx-auto p-4">
+      <h1 class="text-3xl font-bold mb-2">Admin Dashboard</h1>
+      <p class="text-gray-700 mb-6">Velkommen, <strong>${userName}</strong> (<span class="text-blue-600">${userEmail}</span>)</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="admin-pet-list"></div>
+    </div>
   `;
 
   const petListContainer = document.getElementById("admin-pet-list");
@@ -27,6 +39,7 @@ export async function setupDashboard(app) {
       petListContainer.appendChild(card);
     });
 
+    // DELETE-knapper med token
     document.querySelectorAll(".delete-btn").forEach((btn) => {
       btn.addEventListener("click", async () => {
         const id = btn.dataset.id;
@@ -38,7 +51,7 @@ export async function setupDashboard(app) {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${token}`,
             },
           });
 
@@ -54,7 +67,7 @@ export async function setupDashboard(app) {
     });
 
   } catch (err) {
-    app.innerHTML = "<p>Could not load pets.</p>";
+    app.innerHTML = "<p>Kunne ikke laste inn kjæledyr.</p>";
     console.error(err);
   }
 }

@@ -1,9 +1,19 @@
 export function setupHome(app) {
-    app.innerHTML = `
-      <section class="text-center mt-10">
-        <h1 class="text-3xl font-bold mb-4">Velkommen til PetAdopt</h1>
-        <p class="text-gray-600">Klikk videre for å finne ditt nye bestevenn 🐾</p>
-        <a href="/index.html" class="inline-block mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Gå til kjæledyr</a>
-      </section>
-    `;
-  }
+  app.innerHTML = `
+    <section 
+      class="w-full h-screen bg-[url('/src/assets/images/hero.jpg')] bg-cover bg-center flex flex-col items-center justify-center text-center text-white px-4 cursor-pointer"
+      id="heroSection"
+    >
+      <div class="bg-black bg-opacity-50 p-6 rounded">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Velkommen til Pet Adoption Shelter</h1>
+        <p class="text-lg mb-6">Trykk hvor som helst for å se våre søte kjæledyr</p>
+        <button class="bg-white text-black px-6 py-3 rounded hover:bg-gray-200">Se kjæledyr</button>
+      </div>
+    </section>
+  `;
+
+  const hero = document.getElementById("heroSection");
+  hero.addEventListener("click", () => {
+    window.location.href = "/pet/index.html";
+  });
+}

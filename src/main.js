@@ -1,29 +1,17 @@
-
+// src/main.js
 import './style.css';
 import { createNavbar } from './components/navbar.js';
 import { createFooter } from './components/footer.js';
-import { createLogo } from './components/logo.js';
-import { createHamburger } from './components/burgermenu.js';
-import { setupPetList } from './pages/productList.js';
-
+import './router.js'; // Henter riktig innhold basert på URL
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = document.querySelector('#app');
 
-  // Tøm først
-  app.innerHTML = '';
-
-  // Legg til navbar med logo og hamburger
+  // Legg til navbar i toppen (uten å legge den i app-diven!)
   const navbar = createNavbar();
-  navbar.appendChild(createLogo());
-  navbar.appendChild(createHamburger());
-  app.appendChild(navbar);
+  document.body.prepend(navbar);
 
-  // Render pet-list siden
-  const petListContainer = document.createElement('div');
-  app.appendChild(petListContainer);
-  setupPetList(petListContainer);
-
-  // Legg til footer nederst
-  app.appendChild(createFooter());
+  // Legg til footer i bunnen (etter app-diven)
+  const footer = createFooter();
+  document.body.appendChild(footer);
 });
