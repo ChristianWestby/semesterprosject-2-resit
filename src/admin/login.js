@@ -61,8 +61,7 @@ export function setupLogin(app) {
       }
 
       saveToken(data.accessToken);
-      localStorage.setItem("name", data.name);
-      localStorage.setItem("email", data.email);
+      saveUserInfo({ name: data.name, email: data.email });
 
       window.location.href = "/admin/dashboard.html";
 
