@@ -10,23 +10,32 @@ export function setupHome(app) {
       <div class="absolute inset-0 bg-black opacity-80"></div>
 
       <div class="relative z-10 p-6 max-w-2xl">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">Velkommen til Pet Adoption Shelter</h1>
-        <p class="text-lg mb-6">Klikk hvor som helst eller bruk knappen for å se våre søte kjæledyr</p>
-        <button class="bg-white text-black px-6 py-3 rounded hover:bg-gray-200 transition">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+          Velkommen til Pet Adoption Shelter
+        </h1>
+        <p class="text-lg mb-6">
+          Klikk hvor som helst eller bruk knappen for å se våre søte kjæledyr
+        </p>
+        <button 
+          id="heroButton"
+          class="bg-white text-black px-6 py-3 rounded hover:bg-gray-200 transition"
+        >
           Se kjæledyr
         </button>
       </div>
     </section>
   `;
 
+ 
   const hero = document.getElementById("heroSection");
+  const button = document.getElementById("heroButton");
+
   hero.addEventListener("click", () => {
     window.location.href = "/pet/index.html";
   });
 
-  const button = hero.querySelector("button");
   button.addEventListener("click", (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     window.location.href = "/pet/index.html";
   });
 }
