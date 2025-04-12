@@ -1,5 +1,5 @@
-import { fetchAllPets } from '../utils/api.js';
-import { createPetCard } from '../components/petCard.js';
+import { fetchAllPets } from "../utils/api.js";
+import { createPetCard } from "../components/petCard.js";
 
 let allPets = [];
 let currentPage = 1;
@@ -7,107 +7,124 @@ const petsPerPage = 6;
 
 export async function setupPetList(app) {
   app.innerHTML = `
-    <div>
-      <h1>🐾 All our pets</h1>
-      <div class="filters">
-        <input type="text" id="searchInput" placeholder="Search by name..." />
-        <select id="speciesFilter">
-          <option value="">Alle kategorier</option>
-          <option value="Cat">Cat</option>
-          <option value="Dog">Dog</option>
-          <option value="Fish">Fish</option>
-          <option value="Rabbit">Rabbit</option>
-          <option value="Rodent">Rodent</option>
-          <option value="Reptile">Reptile</option>
+    <div class="max-w-7xl mx-auto p-4">
+      <h1 class="text-3xl font-bold mb-4">🐾 Våre dyr</h1>
+      
+      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center mb-6">
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Søk etter navn..." 
+          class="border border-black p-2 rounded w-full sm:w-1/2"
+        />
+        <select 
+          id="speciesFilter" 
+          class="border border-black p-2 rounded w-full sm:w-1/4"
+        >
+          <option value="">Alle arter</option>
+          <option value="Cat">Katt</option>
+          <option value="Dog">Hund</option>
+          <option value="Fish">Fisk</option>
+          <option value="Rabbit">Kanin</option>
+          <option value="Rodent">Gnagere</option>
+          <option value="Reptile">Reptil</option>
         </select>
       </div>
-      <ul id="pet-list" class="pet-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-6"></ul>
-      <div id="pagination" class="pagination flex gap-2 justify-center mt-4"></div>
+
+      <div id="status" class="text-center text-gray-600 mb-4">🔄 Laster inn kjæledyr...</div>
+
+      <ul id="pet-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></ul>
+
+      <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
     </div>
   `;
 
-  const searchInput = document.getElementById('searchInput');
-  const speciesFilter = document.getElementById('speciesFilter');
-  const petList = document.getElementById('pet-list');
-  const pagination = document.getElementById('pagination');
+  const searchInput = document.getElementById("searchInput");
+  const speciesFilter = document.getElementById("speciesFilter");
+  const petList = document.getElementById("pet-list");
+  const pagination = document.getElementById("pagination");
+  const status = document.getElementById("status");
 
-  function filterAndRenderPets() {
-    const searchValue = searchInput.value.toLowerCase();
-    const speciesValue = speciesFilter.value;
+  try {
+    allPets = await fetchAllPets();
+    status.style.display = "none";
+    renderFiltered();
+  } catch (error) {
+    console.error("Feil ved lasting av kjæledyr:", error);
+    status.textContent = "⚠️ Kunne ikke laste kjæledyr. Prøv igjen senere.";
+  }
 
-    const filteredPets = allPets.filter((pet) => {
-      const matchName = pet.name.toLowerCase().includes(searchValue);
-      const matchSpecies = speciesValue === "" || pet.species === speciesValue;
+  function renderFiltered() {
+    const search = searchInput.value.toLowerCase();
+    const species = speciesFilter.value;
+
+    const filtered = allPets.filter(pet => {
+      const matchName = pet.name.toLowerCase().includes(search);
+      const matchSpecies = !species || pet.species === species;
       return matchName && matchSpecies;
     });
 
-    renderPets(filteredPets);
-    renderPagination(filteredPets.length);
+    renderPets(filtered);
+    renderPagination(filtered.length);
   }
 
   function renderPets(pets) {
     const start = (currentPage - 1) * petsPerPage;
-    const end = start + petsPerPage;
-    const petsToShow = pets.slice(start, end);
+    const visiblePets = pets.slice(start, start + petsPerPage);
 
     petList.innerHTML = "";
-    petsToShow.forEach((pet) => {
-      const petCard = createPetCard(pet);
-      petList.appendChild(petCard);
+    if (visiblePets.length === 0) {
+      petList.innerHTML = `<p class="text-gray-600 col-span-full text-center">Ingen kjæledyr funnet.</p>`;
+      return;
+    }
+
+    visiblePets.forEach((pet) => {
+      const card = createPetCard(pet);
+      petList.appendChild(card);
     });
   }
 
-  function renderPagination(totalPets) {
-    const totalPages = Math.ceil(totalPets / petsPerPage);
+  function renderPagination(totalCount) {
+    const totalPages = Math.ceil(totalCount / petsPerPage);
     pagination.innerHTML = "";
 
-    // Forrige-knapp
+    if (totalPages <= 1) return;
+
     if (currentPage > 1) {
-      const prevBtn = document.createElement("button");
-      prevBtn.textContent = "« Forrige";
-      prevBtn.onclick = () => {
-        currentPage--;
-        filterAndRenderPets();
-      };
-      pagination.appendChild(prevBtn);
+      const prev = createPageBtn("« Forrige", currentPage - 1);
+      pagination.appendChild(prev);
     }
 
-    // Sidetall
     for (let i = 1; i <= totalPages; i++) {
-      const pageBtn = document.createElement("button");
-      pageBtn.textContent = i;
-      if (i === currentPage) {
-        pageBtn.classList.add("font-bold", "underline");
-      }
-      pageBtn.onclick = () => {
-        currentPage = i;
-        filterAndRenderPets();
-      };
-      pagination.appendChild(pageBtn);
+      const page = createPageBtn(i, i);
+      if (i === currentPage) page.classList.add("font-bold", "underline");
+      pagination.appendChild(page);
     }
 
-    // Neste-knapp
     if (currentPage < totalPages) {
-      const nextBtn = document.createElement("button");
-      nextBtn.textContent = "Neste »";
-      nextBtn.onclick = () => {
-        currentPage++;
-        filterAndRenderPets();
-      };
-      pagination.appendChild(nextBtn);
+      const next = createPageBtn("Neste »", currentPage + 1);
+      pagination.appendChild(next);
     }
+  }
+
+  function createPageBtn(label, page) {
+    const btn = document.createElement("button");
+    btn.textContent = label;
+    btn.className = "px-3 py-1 rounded border border-gray-400 hover:bg-gray-100";
+    btn.onclick = () => {
+      currentPage = page;
+      renderFiltered();
+    };
+    return btn;
   }
 
   searchInput.addEventListener("input", () => {
     currentPage = 1;
-    filterAndRenderPets();
+    renderFiltered();
   });
 
   speciesFilter.addEventListener("change", () => {
     currentPage = 1;
-    filterAndRenderPets();
+    renderFiltered();
   });
-
-  allPets = await fetchAllPets();
-  filterAndRenderPets();
 }
