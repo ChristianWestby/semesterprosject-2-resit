@@ -7,9 +7,9 @@ const petsPerPage = 6;
 
 export async function setupPetList(app) {
   app.innerHTML = `
-    <div class="max-w-7xl mx-auto p-4">
+    <section class="max-w-7xl mx-auto p-4">
       <h1 class="text-3xl font-bold mb-4">🐾 Våre dyr</h1>
-      
+
       <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center mb-6">
         <input 
           type="text" 
@@ -36,7 +36,7 @@ export async function setupPetList(app) {
       <ul id="pet-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></ul>
 
       <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
-    </div>
+    </section>
   `;
 
   const searchInput = document.getElementById("searchInput");
@@ -64,6 +64,7 @@ export async function setupPetList(app) {
       return matchName && matchSpecies;
     });
 
+    currentPage = Math.min(currentPage, Math.ceil(filtered.length / petsPerPage));
     renderPets(filtered);
     renderPagination(filtered.length);
   }
@@ -74,7 +75,7 @@ export async function setupPetList(app) {
 
     petList.innerHTML = "";
     if (visiblePets.length === 0) {
-      petList.innerHTML = `<p class="text-gray-600 col-span-full text-center">Ingen kjæledyr funnet.</p>`;
+      petList.innerHTML = `<p class="text-gray-600 col-span-full text-center">⚠️ Ingen kjæledyr funnet.</p>`;
       return;
     }
 
@@ -91,26 +92,24 @@ export async function setupPetList(app) {
     if (totalPages <= 1) return;
 
     if (currentPage > 1) {
-      const prev = createPageBtn("« Forrige", currentPage - 1);
-      pagination.appendChild(prev);
+      pagination.appendChild(createPageBtn("« Forrige", currentPage - 1));
     }
 
     for (let i = 1; i <= totalPages; i++) {
-      const page = createPageBtn(i, i);
-      if (i === currentPage) page.classList.add("font-bold", "underline");
-      pagination.appendChild(page);
+      const pageBtn = createPageBtn(i, i);
+      if (i === currentPage) pageBtn.classList.add("bg-black", "text-white");
+      pagination.appendChild(pageBtn);
     }
 
     if (currentPage < totalPages) {
-      const next = createPageBtn("Neste »", currentPage + 1);
-      pagination.appendChild(next);
+      pagination.appendChild(createPageBtn("Neste »", currentPage + 1));
     }
   }
 
   function createPageBtn(label, page) {
     const btn = document.createElement("button");
     btn.textContent = label;
-    btn.className = "px-3 py-1 rounded border border-gray-400 hover:bg-gray-100";
+    btn.className = "px-3 py-1 rounded border border-gray-400 hover:bg-gray-200";
     btn.onclick = () => {
       currentPage = page;
       renderFiltered();
