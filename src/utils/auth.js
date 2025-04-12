@@ -23,3 +23,9 @@ export function saveUserInfo({ name, email }) {
   localStorage.setItem("name", name);
   localStorage.setItem("email", email);
 }
+
+export function protectRoute(redirectTo = "/account/login.html") {
+    if (!isLoggedIn()) {
+      window.location.href = redirectTo;
+    }
+  }
