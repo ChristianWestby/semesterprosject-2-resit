@@ -4,6 +4,7 @@ export function setupRegister(app) {
   app.innerHTML = `
     <div class="max-w-md mx-auto bg-white p-6 rounded shadow mt-12 border border-black">
       <h1 class="text-2xl font-bold mb-4 text-center text-black">Registrer deg</h1>
+
       <form id="register-form" class="space-y-4">
         <input 
           type="text" 
@@ -31,10 +32,12 @@ export function setupRegister(app) {
           required 
           class="w-full p-2 border border-black rounded text-black"
         />
+
         <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 w-full">
           Registrer
         </button>
       </form>
+
       <p id="register-error" class="text-red-600 mt-4 text-center hidden"></p>
     </div>
   `;
@@ -44,34 +47,33 @@ export function setupRegister(app) {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    errorMsg.style.display = "none";
+    errorMsg.classList.add("hidden");
 
     const name = form.name.value.trim();
     const email = form.email.value.trim().toLowerCase();
     const password = form.password.value;
 
     try {
-      const res = await fetch("https://v2.api.noroff.dev/auth/register", {
+      const response = await fetch("https://v2.api.noroff.dev/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
       });
 
-      const { data, error, errors } = await res.json();
+      const { data, error, errors } = await response.json();
 
-      if (!res.ok || error || errors?.length) {
+      if (!response.ok || error || (errors && errors.length)) {
         const message = error?.message || errors?.[0]?.message || "Registrering feilet.";
         throw new Error(message);
       }
 
-      // Automatisk innlogging etter registrering
       saveToken(data.accessToken);
       saveUserInfo(data);
       window.location.href = "/admin/dashboard.html";
     } catch (err) {
-      console.error("Feil ved registrering:", err);
+      console.error("Registrering feilet:", err);
       errorMsg.textContent = err.message;
-      errorMsg.style.display = "block";
+      errorMsg.classList.remove("hidden");
     }
   });
 }
