@@ -1,3 +1,4 @@
+
 import { setupHome } from './pages/home.js';
 import { setupPetList } from './pages/productList.js';
 import { setupSingleProduct } from './pages/singleProduct.js';
@@ -16,22 +17,25 @@ app.innerHTML = "";
 
 if (path === '/' || path.endsWith('/index.html')) {
   setupHome(app);
-
+  document.body.appendChild(createFooter());
 } else {
   document.body.insertBefore(createNavbar(), app);
   document.body.appendChild(createFooter());
 
-  if (path.includes('/pet/index.html')) {
+  if (path === '/pet' || path === '/pet/' || path.endsWith('/pet/index.html')) {
     setupPetList(app);
+
+  } else if (path.includes('/pet/detail.html') && window.location.search.includes('id=')) {
+    setupSingleProduct(app);
+
+  } else if (path.includes('/pet/') && path.includes('?id=')) {
+    setupSingleProduct(app);
 
   } else if (path.includes('/pet/edit.html')) {
     setupEditForm(app);
 
   } else if (path.includes('/pet/create.html')) {
     setupCreatePet(app);
-
-  } else if (path.includes('/pet/') && path.includes('?id=')) {
-    setupSingleProduct(app);
 
   } else if (path.includes('/account/login.html')) {
     setupLogin(app);

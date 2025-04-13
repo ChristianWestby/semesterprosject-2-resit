@@ -30,12 +30,12 @@ export function setupHome(app) {
   const hero = document.getElementById("heroSection");
   const button = document.getElementById("heroButton");
 
-  hero.addEventListener("click", () => {
-    window.location.href = "/pet/index.html";
-  });
+ hero.addEventListener("click", () => {
+  window.location.href = "/pet/index.html";
+});
 
   button.addEventListener("click", (e) => {
     e.stopPropagation();
-    window.location.href = "/pet/index.html";
+    window.location.href = "/pet";
   });
 }

@@ -1,35 +1,32 @@
-// src/components/petCard.js
 export function createPetCard(pet) {
   const card = document.createElement('li');
-  card.className = `
-    w-full max-w-xs mx-auto border rounded-lg shadow-md flex flex-col bg-white overflow-hidden
-  `;
+  card.className = 'w-full max-w-xs mx-auto rounded-lg shadow-md overflow-hidden';
 
   card.innerHTML = `
-    <div class="h-40 w-full">
+    <div class="relative bg-green-600">
       <img 
         src="${pet.image?.url}" 
         alt="${pet.image?.alt || pet.name}" 
-        class="w-full h-full object-cover"
+        class="w-full h-48 object-cover"
       />
-    </div>
-    <div class="p-4 flex-1 flex flex-col justify-between">
-      <div>
-        <h2 class="text-xl font-bold text-black mb-1">${pet.name}</h2>
-        <p class="text-sm text-gray-700"><strong>Species:</strong> ${pet.species}</p>
-        <p class="text-sm text-gray-700"><strong>Breed:</strong> ${pet.breed}</p>
-        <p class="text-sm text-gray-700"><strong>Age:</strong> ${pet.age}</p>
-        <p class="text-sm text-gray-700"><strong>Gender:</strong> ${pet.gender}</p>
-        <p class="text-sm text-gray-700"><strong>Size:</strong> ${pet.size}</p>
-        <p class="text-sm text-gray-700"><strong>Color:</strong> ${pet.color}</p>
-        <p class="text-xs text-gray-600 mt-2">${pet.description}</p>
+      
+      <!-- Bakgrunn med gjennomsiktig mørk overlay -->
+      <div class="absolute inset-0 bg-black opacity-30"></div>
+
+      <!-- Tekst-innhold med høyere z-index -->
+      <div class="relative p-4 text-white z-10">
+        <h2 class="text-xl font-bold mb-1">${pet.name}</h2>
+        <p class="text-sm"><strong>Art:</strong> ${pet.species}</p>
+        <p class="text-sm"><strong>Rase:</strong> ${pet.breed}</p>
+        <p class="text-sm"><strong>Alder:</strong> ${pet.age}</p>
+
+        <a 
+          href="/pet/detail.html?id=${pet.id}" 
+          class="mt-4 inline-block text-sm underline text-white hover:text-gray-200"
+        >
+          Se mer info
+        </a>
       </div>
-      <a 
-        href="/pet/index.html?id=${pet.id}" 
-        class="mt-4 inline-block text-blue-600 hover:underline font-medium"
-      >
-        Se mer →
-      </a>
     </div>
   `;
 

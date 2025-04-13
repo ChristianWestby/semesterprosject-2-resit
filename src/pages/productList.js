@@ -7,15 +7,15 @@ const petsPerPage = 6;
 
 export async function setupPetList(app) {
   app.innerHTML = `
-    <section class="max-w-7xl mx-auto p-4">
-      <h1 class="text-3xl font-bold mb-4">🐾 Våre dyr</h1>
+    <section class="max-w-7xl mx-auto p-12">
+      <h1 class="text-3xl font-bold mb-12">🐾 Våre dyr</h1>
 
-      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center mb-6">
+      <div class="flex justify-center flex-col sm:flex-row gap-4 items-start sm:items-center mb-6">
         <input 
           type="text" 
           id="searchInput" 
           placeholder="Søk etter navn..." 
-          class="border border-black p-2 rounded w-full sm:w-1/2"
+          class="border border-black p-2 rounded w-full sm:w-1/3"
         />
         <select 
           id="speciesFilter" 
@@ -31,7 +31,7 @@ export async function setupPetList(app) {
         </select>
       </div>
 
-      <div id="status" class="text-center text-gray-600 mb-4">🔄 Laster inn kjæledyr...</div>
+      <div id="status" class="text-center text-red-600 mb-4">🔄 Laster inn kjæledyr...</div>
 
       <ul id="pet-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></ul>
 

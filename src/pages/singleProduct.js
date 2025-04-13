@@ -42,6 +42,14 @@ export async function setupSingleProduct(app) {
 
         <p class="text-gray-700 leading-relaxed">${pet.description}</p>
       </div>
+      <div class="mt-6 text-center">
+      <button 
+       onclick="window.history.back()" 
+      class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition"
+      >
+        ← Tilbake til listen
+      </button>
+      </div>
     `;
 
     const shareBtn = document.getElementById("shareBtn");
