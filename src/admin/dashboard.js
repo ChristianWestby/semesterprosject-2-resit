@@ -53,11 +53,13 @@ export async function setupDashboard(app) {
 
         try {
           const res = await fetch(`https://v2.api.noroff.dev/pets/${id}`, {
-            method: "DELETE",
+            method: "PUT",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
+              "x-api-key": "noroff-api-key" 
             },
+            body: JSON.stringify(updatedPet),
           });
 
           if (res.ok) {

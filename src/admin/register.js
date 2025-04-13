@@ -54,10 +54,14 @@ export function setupRegister(app) {
     const password = form.password.value;
 
     try {
-      const response = await fetch("https://v2.api.noroff.dev/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+      const res = await fetch(`https://v2.api.noroff.dev/pets/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          "x-api-key": "noroff-api-key" 
+        },
+        body: JSON.stringify(updatedPet),
       });
 
       const { data, error, errors } = await response.json();
@@ -70,6 +74,7 @@ export function setupRegister(app) {
       saveToken(data.accessToken);
       saveUserInfo(data);
       window.location.href = "/admin/dashboard.html";
+
     } catch (err) {
       console.error("Registrering feilet:", err);
       errorMsg.textContent = err.message;

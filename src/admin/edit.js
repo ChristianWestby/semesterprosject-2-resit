@@ -60,16 +60,22 @@ export async function setupEditForm(app) {
       };
 
       try {
+        console.log("🔐 Bruker token:", token);
         const res = await fetch(`https://v2.api.noroff.dev/pets/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
+            "x-api-key": "noroff-api-key" 
           },
           body: JSON.stringify(updatedPet),
         });
 
-        if (!res.ok) throw new Error("Oppdatering feilet");
+        if (!res.ok) {
+          const errData = await res.json();
+          console.error("API-feil:", errData);
+          throw new Error(errData.errors?.[0]?.message || "Oppdatering feilet");
+        }
 
         alert("Kjæledyr oppdatert!");
         window.location.href = "/admin/dashboard.html";

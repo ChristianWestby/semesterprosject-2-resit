@@ -51,7 +51,7 @@ export async function setupPetList(app) {
     renderFiltered();
   } catch (error) {
     console.error("Feil ved lasting av kjæledyr:", error);
-    status.textContent = "⚠️ Kunne ikke laste kjæledyr. Prøv igjen senere.";
+    status.textContent = "Kunne ikke laste kjæledyr. Prøv igjen senere.";
   }
 
   function renderFiltered() {

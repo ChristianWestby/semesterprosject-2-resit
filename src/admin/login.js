@@ -1,10 +1,11 @@
 import { saveToken, saveUserInfo } from "../utils/auth.js";
+import { createLogo } from "../components/logo.js";
 
 export function setupLogin(app) {
   app.innerHTML = `
     <div style="background-color: white; min-height: 100vh;" class="flex items-center justify-center px-4">
       <div style="background-color: white; border: 2px solid black;" class="max-w-md w-full p-6 rounded shadow">
-        <h1 class="text-2xl font-bold mb-6 text-center text-black">Logg inn</h1>
+      <h1 class="text-2xl font-bold mb-6 text-center text-black">Logg inn</h1>
 
         <form id="login-form" class="space-y-4">
           <label class="block text-black">
@@ -14,7 +15,7 @@ export function setupLogin(app) {
               name="email" 
               class="w-full p-2 rounded mt-1 border-2 border-black text-black bg-white" 
               required 
-              value="christian@noroff.no"
+              value="christian42@noroff.no"
             />
           </label>
           <label class="block text-black">

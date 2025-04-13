@@ -53,13 +53,14 @@ export function setupCreatePet(app) {
     };
 
     try {
-      const res = await fetch("https://v2.api.noroff.dev/pets", {
-        method: "POST",
+      const res = await fetch(`https://v2.api.noroff.dev/pets/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          "x-api-key": "noroff-api-key" 
         },
-        body: JSON.stringify(newPet),
+        body: JSON.stringify(updatedPet),
       });
 
       const result = await res.json();
