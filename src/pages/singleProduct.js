@@ -13,15 +13,17 @@ export async function setupSingleProduct(app) {
     const pet = await fetchPetById(petId);
 
     app.innerHTML = `
-      <div class="max-w-3xl mx-auto p-4">
-        <div class="flex justify-between items-center mb-4">
-          <h1 class="text-3xl font-bold">${pet.name}</h1>
+      <div class="mt-[260px] bg-orange-100 min-h-screen py-12">
+        <div class="max-w-4xl mx-auto bg-[#FDF7E3] text-gray-800 p-8 rounded shadow-lg">
+       
+        <div class="flex justify-between items-center mb-6">  
+        <h1 class="text-3xl font-bold underline">${pet.name}</h1>
           <button 
-            id="shareBtn" 
-            class="text-sm text-blue-600 underline hover:text-blue-800 transition"
-            title="Kopier lenke til kjæledyret"
+           id="shareBtn" 
+           class="bg-blue-600 text-white px-4 py-2 rounded-full shadow hover:bg-blue-700 transition text-sm font-semibold"
+           title="Kopier lenke til kjæledyret"
           >
-            🔗 Kopier lenke
+           🔗 Kopier lenke
           </button>
         </div>
 
@@ -40,7 +42,7 @@ export async function setupSingleProduct(app) {
           <li><strong>Farge:</strong> ${pet.color}</li>
         </ul>
 
-        <p class="text-gray-700 leading-relaxed">${pet.description}</p>
+        <p class="text-gray-700 font-bold leading-relaxed">${pet.description}</p>
       </div>
       <div class="mt-6 text-center">
       <button 

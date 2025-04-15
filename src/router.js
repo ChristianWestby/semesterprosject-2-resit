@@ -12,12 +12,11 @@ import { createLogo } from './components/logo.js';
 
 const app = document.getElementById('app');
 const path = window.location.pathname;
-
 app.innerHTML = "";
 
 console.log("Current path:", path);
 
-// Login og Register skal IKKE ha navbar/footer – men vise logo og hjemlenke
+// 🔐 Login og Register skal ha logo og hjemlenke – men ikke navbar/footer
 if (path.includes('/account/login.html') || path.includes('/account/register.html')) {
   const logoWrapper = document.createElement("div");
   logoWrapper.className = "flex flex-col items-center mt-6 mb-4";
@@ -38,43 +37,51 @@ if (path.includes('/account/login.html') || path.includes('/account/register.htm
   } else {
     setupRegister(app);
   }
-} else {
-  // Alle andre sider får navbar og footer
-  document.body.insertBefore(createNavbar(), app);
+
   document.body.appendChild(createFooter());
 
-  if (path === '/' || path === '/index.html') {
-    setupHome(app);
+} else if (path === '/' || path === '/index.html') {
+  // 🏠 Forside: kun hero og footer
+  setupHome(app);
+  document.body.appendChild(createFooter());
 
-  } else if (
-    path === '/pet' ||
-    path === '/pet/' ||
-    path === '/pet/index.html' ||
-    path.endsWith('/pet/index.html')
-  ) {
-    setupPetList(app);
+} else if (
+  path === '/pet' ||
+  path === '/pet/' ||
+  path.endsWith('/pet/index.html')
+) {
+  document.body.insertBefore(createNavbar(), app);
+  setupPetList(app);
+  document.body.appendChild(createFooter());
 
-  } else if (
-    path.includes('/pet/detail.html') &&
-    window.location.search.includes('id=')
-  ) {
-    setupSingleProduct(app);
+} else if (
+  path.includes('/pet/detail.html') &&
+  window.location.search.includes('id=')
+) {
+  document.body.insertBefore(createNavbar(), app);
+  setupSingleProduct(app);
+  document.body.appendChild(createFooter());
 
-  } else if (path.includes('/pet/edit.html')) {
-    setupEditForm(app);
+} else if (path.includes('/pet/edit.html')) {
+  document.body.insertBefore(createNavbar(), app);
+  setupEditForm(app);
+  document.body.appendChild(createFooter());
 
-  } else if (path.includes('/pet/create.html')) {
-    setupCreatePet(app);
+} else if (path.includes('/pet/create.html')) {
+  document.body.insertBefore(createNavbar(), app);
+  setupCreatePet(app);
+  document.body.appendChild(createFooter());
 
-  } else if (path.includes('/admin/dashboard.html')) {
-    setupDashboard(app);
+} else if (path.includes('/admin/dashboard.html')) {
+  document.body.insertBefore(createNavbar(), app);
+  setupDashboard(app);
+  document.body.appendChild(createFooter());
 
-  } else {
-    app.innerHTML = `
-      <section class="text-center py-20">
-        <h1 class="text-3xl font-bold mb-4">404 - Side ikke funnet</h1>
-        <a href="/" class="text-blue-600 underline">Gå til forsiden</a>
-      </section>
-    `;
-  }
+} else {
+  app.innerHTML = `
+    <section class="text-center py-20">
+      <h1 class="text-3xl font-bold mb-4">404 - Side ikke funnet</h1>
+      <a href="/" class="text-blue-600 underline">Gå til forsiden</a>
+    </section>
+  `;
 }

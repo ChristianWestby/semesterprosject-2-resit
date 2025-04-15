@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 @keyframes pawMove {
   0% { transform: translateX(-60px); opacity: 0; }
   20% { opacity: 1; }

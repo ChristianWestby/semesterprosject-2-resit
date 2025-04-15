@@ -7,19 +7,20 @@ const petsPerPage = 6;
 
 export async function setupPetList(app) {
   app.innerHTML = `
-    <section class="max-w-7xl mx-auto p-12">
-      <h1 class="text-3xl font-bold mb-12">🐾 Våre dyr</h1>
+  <div class="mt-[260px] bg-green-600 min-h-screen py-12">
+    <div class="max-w-6xl mx-auto bg-[#FFF8E7] p-8 rounded shadow-md">
+      <h1 class="text-6xl font-bold mb-8 text-center text-gray-800">Våre dyr 🐾</h1>
 
-      <div class="flex justify-center flex-col sm:flex-row gap-4 items-start sm:items-center mb-6">
+      <div class="max-w-2xl mx-auto flex flex-col sm:flex-row justify-center gap-4 mb-8">
         <input 
           type="text" 
           id="searchInput" 
           placeholder="Søk etter navn..." 
-          class="border border-black p-2 rounded w-full sm:w-1/3"
+          class="border border-black p-2 rounded w-full sm:w-2/3"
         />
         <select 
           id="speciesFilter" 
-          class="border border-black p-2 rounded w-full sm:w-1/4"
+          class="border border-black p-2 rounded w-full sm:w-1/3"
         >
           <option value="">Alle arter</option>
           <option value="Cat">Katt</option>
@@ -33,11 +34,14 @@ export async function setupPetList(app) {
 
       <div id="status" class="text-center text-red-600 mb-4">🔄 Laster inn kjæledyr...</div>
 
-      <ul id="pet-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></ul>
+      <ul id="pet-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></ul>
 
-      <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
-    </section>
-  `;
+      <div id="pagination" class="flex justify-center gap-2 mt-8"></div>
+    </div>
+  </div>
+`;
+
+  // resten av koden under er uendret
 
   const searchInput = document.getElementById("searchInput");
   const speciesFilter = document.getElementById("speciesFilter");

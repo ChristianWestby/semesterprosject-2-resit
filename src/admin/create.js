@@ -1,51 +1,52 @@
-import { getToken, protectRoute } from "../utils/auth.js";
+import { getToken } from "../utils/auth.js";
+import { getAuthHeaders } from "../utils/api.js";
 
 export function setupCreatePet(app) {
-  protectRoute(); 
-
   const token = getToken();
-  const userName = localStorage.getItem("name");
-  const userEmail = localStorage.getItem("email");
 
-  app.innerHTML = `
-    <div class="max-w-xl mx-auto bg-white p-6 rounded shadow border border-black mt-8">
-      <h1 class="text-2xl font-bold mb-2 text-black">Opprett nytt kjæledyr</h1>
-      <p class="text-sm text-gray-700 mb-6">Innlogget som <strong>${userName}</strong> (${userEmail})</p>
+  app.innerHTML = ` 
+  <div class="mt-[280px] max-w-6xl mx-auto bg-green-600 text-white p-10 rounded shadow-lg border border-black">
+    <h1 class="text-3xl font-bold mb-6">Legg til nytt kjæledyr</h1>
+    <form id="create-form" class="space-y-4">
+      <input type="text" name="name" placeholder="Navn" class="w-full border p-2 rounded text-black" required />
+      <input type="text" name="species" placeholder="Art" class="w-full border p-2 rounded text-black" required />
+      <input type="text" name="breed" placeholder="Rase" class="w-full border p-2 rounded text-black" required />
+      <input type="number" name="age" placeholder="Alder" class="w-full border p-2 rounded text-black" required />
 
-      <form id="create-form" class="space-y-4">
-        <input type="text" name="name" placeholder="Navn" class="w-full p-2 border border-black rounded text-black" required />
-        <input type="text" name="species" placeholder="Art" class="w-full p-2 border border-black rounded text-black" required />
-        <input type="text" name="breed" placeholder="Rase" class="w-full p-2 border border-black rounded text-black" required />
-        <input type="number" name="age" placeholder="Alder" class="w-full p-2 border border-black rounded text-black" required />
-        <input type="text" name="size" placeholder="Størrelse" class="w-full p-2 border border-black rounded text-black" required />
-        <input type="text" name="color" placeholder="Farge" class="w-full p-2 border border-black rounded text-black" required />
-        <textarea name="description" placeholder="Beskrivelse" class="w-full p-2 border border-black rounded text-black"></textarea>
-        <input type="text" name="imageUrl" placeholder="Bilde-URL" class="w-full p-2 border border-black rounded text-black" />
+      <select name="gender" class="w-full border p-2 rounded text-black" required>
+        <option value="">Velg kjønn</option>
+        <option value="male">Hann</option>
+        <option value="female">Hunn</option>
+      </select>
 
-        <button type="submit" class="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">Opprett kjæledyr</button>
-        <p id="create-error" class="text-red-600 mt-2 hidden text-center"></p>
-        <p id="create-success" class="text-green-600 mt-2 hidden text-center"></p>
-      </form>
-    </div>
-  `;
+      <input type="text" name="size" placeholder="Størrelse" class="w-full border p-2 rounded text-black" required />
+      <input type="text" name="color" placeholder="Farge" class="w-full border p-2 rounded text-black" required />
+      <input type="text" name="location" placeholder="Plassering" class="w-full border p-2 rounded text-black" required />
+      <textarea name="description" placeholder="Beskrivelse" class="w-full border p-2 rounded text-black"></textarea>
+      <input type="text" name="imageUrl" placeholder="Bilde-URL" class="w-full border p-2 rounded text-black" />
+
+      <button type="submit" class="bg-orange-600 text-white px-6 py-2 rounded-full hover:bg-orange-700 transition font-semibold mt-4">
+        🐶 Opprett kjæledyr
+      </button>
+    </form>
+  </div>
+`;
 
   const form = document.getElementById("create-form");
-  const errorMsg = document.getElementById("create-error");
-  const successMsg = document.getElementById("create-success");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    errorMsg.classList.add("hidden");
-    successMsg.classList.add("hidden");
 
     const newPet = {
       name: form.name.value.trim(),
       species: form.species.value.trim(),
       breed: form.breed.value.trim(),
       age: Number(form.age.value),
+      gender: form.gender.value,
       size: form.size.value.trim(),
       color: form.color.value.trim(),
       description: form.description.value.trim(),
+      location: form.location.value,
       image: {
         url: form.imageUrl.value.trim(),
         alt: form.name.value.trim(),
@@ -53,34 +54,27 @@ export function setupCreatePet(app) {
     };
 
     try {
-      const res = await fetch(`https://v2.api.noroff.dev/pets/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          "x-api-key": "noroff-api-key" 
-        },
-        body: JSON.stringify(updatedPet),
+      console.log("Objekt som sendes til API:", newPet);
+
+      const res = await fetch("https://v2.api.noroff.dev/pets", {
+        method: "POST",
+        headers: getAuthHeaders(token),
+        body: JSON.stringify(newPet),
       });
 
       const result = await res.json();
+      console.log("Svar fra API:", result);
 
-      if (!res.ok) {
-        throw new Error(result.errors?.[0]?.message || "Oppretting feilet.");
-      }
+      if (!res.ok) throw new Error(result.errors?.[0]?.message || "Oppretting feilet");
 
-      successMsg.textContent = "🐾 Kjæledyret ble opprettet!";
-      successMsg.classList.remove("hidden");
-      form.reset();
-
+      alert("🐾 Kjæledyr opprettet!");
       setTimeout(() => {
         window.location.href = "/admin/dashboard.html";
       }, 1500);
 
-    } catch (error) {
-      console.error("Oppretting feilet:", error);
-      errorMsg.textContent = error.message || "Kunne ikke opprette kjæledyret.";
-      errorMsg.classList.remove("hidden");
+    } catch (err) {
+      console.error("Oppretting feilet:", err);
+      alert(err.message || "Kunne ikke opprette kjæledyret.");
     }
   });
 }
