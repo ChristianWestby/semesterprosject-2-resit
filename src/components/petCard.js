@@ -1,42 +1,32 @@
 export function createPetCard(pet) {
   const card = document.createElement('li');
-  card.classList.add(
-    'pet-item',
-    'w-full',
-    'max-w-xs',
-    'mx-auto',
-    'overflow-hidden',
-    'border',
-    'rounded-lg',
-    'shadow-md',
-    'flex',
-    'flex-col'
-  );
+  card.className = 'w-full max-w-xs mx-auto rounded-lg shadow-md overflow-hidden';
 
   card.innerHTML = `
-    <div class="w-full h-40 overflow-hidden">
+    <div class="relative bg-green-600">
       <img 
         src="${pet.image?.url}" 
         alt="${pet.image?.alt || pet.name}" 
-        class="w-full h-full object-cover"
-      >
-    </div>
+        class="w-full h-48 object-cover"
+      />
+      
+      <!-- Bakgrunn med gjennomsiktig mørk overlay -->
+      <div class="absolute inset-0 bg-black opacity-30"></div>
 
-    <div class="p-4 flex-1 overflow-auto">
-      <h2 class="text-lg font-bold mb-2">${pet.name}</h2>
-      <p class="text-sm"><strong>Species:</strong> ${pet.species}</p>
-      <p class="text-sm"><strong>Breed:</strong> ${pet.breed}</p>
-      <p class="text-sm"><strong>Age:</strong> ${pet.age}</p>
-      <p class="text-sm"><strong>Gender:</strong> ${pet.gender}</p>
-      <p class="text-sm"><strong>Size:</strong> ${pet.size}</p>
-      <p class="text-sm"><strong>Color:</strong> ${pet.color}</p>
-      <p class="text-xs text-gray-700 mt-2">${pet.description}</p>
-      <a 
-        href="/pet/index.html?id=${pet.id}" 
-        class="mt-3 inline-block text-blue-600 underline"
-      >
-        View details
-      </a>
+      <!-- Tekst-innhold med høyere z-index -->
+      <div class="relative p-4 text-white z-10">
+        <h2 class="text-xl font-bold mb-1">${pet.name}</h2>
+        <p class="text-sm"><strong>Art:</strong> ${pet.species}</p>
+        <p class="text-sm"><strong>Rase:</strong> ${pet.breed}</p>
+        <p class="text-sm"><strong>Alder:</strong> ${pet.age}</p>
+
+        <a 
+          href="/pet/detail.html?id=${pet.id}" 
+          class="mt-4 inline-block text-sm underline text-white hover:text-gray-200"
+        >
+          Se mer info
+        </a>
+      </div>
     </div>
   `;
 
