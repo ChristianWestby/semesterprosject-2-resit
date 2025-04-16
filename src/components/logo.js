@@ -12,10 +12,10 @@ export function createLogo() {
             PET
           </span>
           <img 
-            src="/src/assets/images/paws.svg" 
+            src="/images/paws.svg" 
             alt="Pote" 
             class="w-6 h-6 mt-1"
-          />
+           />
         </div>
         <div class="text-white text-xs text-center uppercase tracking-wide">
           Adoption Shelter
