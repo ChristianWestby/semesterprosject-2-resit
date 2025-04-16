@@ -9,13 +9,15 @@ export async function setupDashboard(app) {
   const userEmail = localStorage.getItem("email") || "Ukjent e-post";
 
   app.innerHTML = `
-    <div class="max-w-6xl mx-auto p-4">
-      <h1 class="text-3xl font-bold mb-2">Admin Dashboard</h1>
-      <p class="text-gray-700 mb-6">Velkommen, <strong>${userName}</strong> 
-        <span class="text-sm text-blue-600 block">${userEmail}</span>
-      </p>
+    <div class="w-full mt-20 min-h-screen rounded-lg bg-green-700 text-white px-4 py-8">
+      <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl font-bold mb-2">Admin Dashboard</h1>
+        <p class="mb-8">Velkommen, <strong>${userName}</strong><br>
+          <span class="text-sm text-white-200">Admin user mail: ${userEmail}</span>
+        </p>
 
-      <div id="admin-pet-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+       <div id="admin-pet-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+      </div>
     </div>
   `;
 
@@ -25,22 +27,35 @@ export async function setupDashboard(app) {
     const pets = await fetchAllPets();
 
     if (pets.length === 0) {
-      petListContainer.innerHTML = `<p class="col-span-full text-center text-gray-500">Ingen kjæledyr funnet.</p>`;
+      petListContainer.innerHTML = `<p class="col-span-full text-center text-white opacity-70">Ingen kjæledyr funnet.</p>`;
       return;
     }
 
     pets.forEach((pet) => {
       const card = document.createElement("div");
-      card.className = "border rounded p-4 bg-white shadow";
+      card.className = "bg-green-600 border border-green-400 rounded-xl p-4 shadow-md";
 
       card.innerHTML = `
-        <h2 class="text-lg font-semibold mb-2">${pet.name}</h2>
-        <p class="text-sm mb-2">${pet.breed} | ${pet.species}</p>
-        <div class="flex gap-2">
-          <a href="/pet/edit.html?id=${pet.id}" class="text-blue-600 underline">Rediger</a>
-          <button class="text-red-600 hover:underline delete-btn" data-id="${pet.id}">Slett</button>
-        </div>
-      `;
+  <div class="flex flex-col gap-2">
+    ${pet.image?.url ? `
+      <img 
+        src="${pet.image.url}" 
+        alt="${pet.image.alt || pet.name}" 
+        class="w-full h-40 object-cover rounded"
+      />
+    ` : `
+      <div class="w-full h-40 bg-gray-200 rounded flex items-center justify-center text-gray-500">
+        Ingen bilde
+      </div>
+    `}
+    <h2 class="text-xl font-bold">${pet.name}</h2>
+    <p class="text-sm">${pet.breed} | ${pet.species}</p>
+    </div>
+    <div class="flex justify-between mt-4">
+    <a href="/pet/edit.html?id=${pet.id}" class="text-blue-600 hover:underline font-medium">Rediger</a>
+    <button class="text-red-600 hover:underline delete-btn font-medium" data-id="${pet.id}">Slett</button>
+  </div>
+`;
 
       petListContainer.appendChild(card);
     });
@@ -53,15 +68,17 @@ export async function setupDashboard(app) {
 
         try {
           const res = await fetch(`https://v2.api.noroff.dev/pets/${id}`, {
-            method: "DELETE",
+            method: "DELETE", 
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
+              "X-Noroff-API-Key": "227d4ff6-0c0b-4587-8d71-a0ca6528e73f",
             },
           });
 
           if (res.ok) {
-            btn.closest("div").remove();
+            alert("🐾 Kjæledyret ble slettet!");
+            location.reload();
           } else {
             alert("Klarte ikke å slette kjæledyret.");
           }
@@ -74,6 +91,6 @@ export async function setupDashboard(app) {
 
   } catch (err) {
     console.error("Feil ved henting av kjæledyr:", err);
-    app.innerHTML = "<p class='text-red-600 text-center'>Kunne ikke laste inn kjæledyr.</p>";
+    app.innerHTML = "<p class='text-red-200 text-center mt-12'>Kunne ikke laste inn kjæledyr.</p>";
   }
 }

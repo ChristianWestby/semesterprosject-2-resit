@@ -1,60 +1,92 @@
-// src/components/navbar.js
 import { isLoggedIn, removeToken } from "../utils/auth.js";
+import { createLogo } from "./logo.js";
 
 export function createNavbar() {
   const nav = document.createElement("nav");
-  nav.className = "h-[80px] bg-[#F2EFE7] border-b-2 border-black";
+  nav.className = "fixed top-0 left-0 w-full h-[260px] z-50 bg-[#F2EFE7] border-b-2 border-black shadow";
 
   const container = document.createElement("div");
-  container.className =
-    "max-w-7xl mx-auto px-4 h-full flex items-center justify-between";
+  container.className = "max-w-7xl mx-auto px-6 h-full flex flex-col justify-center";
 
-  // Logo
-  const logo = document.createElement("div");
-  logo.textContent = "PET ADOPTION SHELTER";
-  logo.className = "text-black text-xl font-bold";
 
-  // Nav links
-  const ul = document.createElement("ul");
-  ul.className = "flex gap-6 text-black font-medium items-center";
+  const topRow = document.createElement("div");
+  topRow.className = "flex justify-between items-start";
 
-  // Hjem og Produkter
-  ul.innerHTML = `
-    <li><a href="/index.html" class="hover:underline">Hjem</a></li>
-    <li><a href="/pet/index.html" class="hover:underline">Produkter</a></li>
-  `;
 
-  // Dynamisk innhold avhengig av om bruker er innlogget
+  const logo = createLogo();
+  logo.classList.add("w-auto", "drop-shadow-lg", "mt-10", "ml-2");
+
+ 
+  const rightSide = document.createElement("div");
+  rightSide.className = "flex flex-col items-end gap-2 mt-6 mr-2";
+
   if (isLoggedIn()) {
     const name = localStorage.getItem("name") || "bruker";
 
-    const userInfo = document.createElement("li");
-    userInfo.textContent = `Innlogget som ${name}`;
-    userInfo.className = "text-black";
+    const userBox = document.createElement("div");
+    userBox.innerHTML = `<span class="block">Admin user:</span><span class="block">${name}</span>`;
+    userBox.className = "bg-black text-white font-bold px-4 py-2 rounded shadow text-sm text-right";
 
-    const logout = document.createElement("li");
     const logoutBtn = document.createElement("button");
     logoutBtn.textContent = "Logg ut";
-    logoutBtn.className = "hover:underline text-red-600";
+    logoutBtn.className = "bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition text-sm font-semibold";
+
     logoutBtn.addEventListener("click", () => {
       removeToken();
       localStorage.removeItem("name");
       localStorage.removeItem("email");
       location.href = "/index.html";
     });
-    logout.appendChild(logoutBtn);
 
-    ul.appendChild(userInfo);
-    ul.appendChild(logout);
-  } else {
-    const login = document.createElement("li");
-    login.innerHTML = `<a href="/account/login.html" class="hover:underline">Login</a>`;
-    ul.appendChild(login);
+    rightSide.appendChild(userBox);
+    rightSide.appendChild(logoutBtn);
   }
 
-  // Sett sammen
-  container.appendChild(logo);
-  container.appendChild(ul);
+  topRow.appendChild(logo);
+  topRow.appendChild(rightSide);
+
+
+  const navLinks = document.createElement("ul");
+  navLinks.className = "flex gap-4 justify-center mt-4 text-lg text-black font-medium";
+
+  const homeLink = document.createElement("li");
+  homeLink.innerHTML = `<a href="/index.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition">Home</a>`;
+
+  const animalsLink = document.createElement("li");
+  animalsLink.innerHTML = `<a href="/pet/index.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition">Dyrene våre</a>`;
+
+  navLinks.appendChild(homeLink);
+  navLinks.appendChild(animalsLink);
+
+  
+  if (isLoggedIn()) {
+    const dashboardLink = document.createElement("li");
+    dashboardLink.innerHTML = `<a href="/admin/dashboard.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition text-sm"
+    >🛠️ Dashboard
+    </a>
+    `;
+
+    const createLink = document.createElement("li");
+    createLink.innerHTML = `<a href="/pet/create.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition text-sm"
+    >➕ Legg til dyr
+    </a>
+    `;
+
+    navLinks.appendChild(dashboardLink);
+    navLinks.appendChild(createLink);
+  } else {
+   
+    const loginLink = document.createElement("li");
+    loginLink.innerHTML = `<a href="/account/login.html" class="ml-auto bg-green-600 text-white px-6 py-2 rounded-full shadow hover:bg-red-700 transition text-sm font-semibold">
+    Login
+    </a>
+   `;
+
+   navLinks.appendChild(loginLink);
+  }
+
+  container.appendChild(topRow);
+  container.appendChild(navLinks); 
   nav.appendChild(container);
 
   return nav;

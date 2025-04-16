@@ -4,7 +4,7 @@ module.exports = {
     "./account/**/*.html",
     "./admin/**/*.html",
     "./pet/**/*.html",
-    "./src/**/*.{js,ts}"
+    "./src/**/*.{js,ts,css,html}"
   ],
   theme: {
     extend: {},
