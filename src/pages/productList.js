@@ -41,8 +41,6 @@ export async function setupPetList(app) {
   </div>
 `;
 
-  // resten av koden under er uendret
-
   const searchInput = document.getElementById("searchInput");
   const speciesFilter = document.getElementById("speciesFilter");
   const petList = document.getElementById("pet-list");

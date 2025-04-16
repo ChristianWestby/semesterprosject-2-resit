@@ -77,7 +77,8 @@ export async function setupDashboard(app) {
           });
 
           if (res.ok) {
-            btn.closest("div").remove();
+            alert("🐾 Kjæledyret ble slettet!");
+            location.reload();
           } else {
             alert("Klarte ikke å slette kjæledyret.");
           }

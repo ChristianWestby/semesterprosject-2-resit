@@ -8,15 +8,15 @@ export function createNavbar() {
   const container = document.createElement("div");
   container.className = "max-w-7xl mx-auto px-6 h-full flex flex-col justify-center";
 
-  // 🟨 Øverste rad: logo og admin info
+
   const topRow = document.createElement("div");
   topRow.className = "flex justify-between items-start";
 
-  // ⬅️ Logo
+
   const logo = createLogo();
   logo.classList.add("w-auto", "drop-shadow-lg", "mt-10", "ml-2");
 
-  // ➡️ Admin info og logg ut
+ 
   const rightSide = document.createElement("div");
   rightSide.className = "flex flex-col items-end gap-2 mt-6 mr-2";
 
@@ -45,7 +45,7 @@ export function createNavbar() {
   topRow.appendChild(logo);
   topRow.appendChild(rightSide);
 
-  // 🔗 Navigasjonslenker midtstilt under topRow
+
   const navLinks = document.createElement("ul");
   navLinks.className = "flex gap-4 justify-center mt-4 text-lg text-black font-medium";
 
@@ -58,14 +58,18 @@ export function createNavbar() {
   navLinks.appendChild(homeLink);
   navLinks.appendChild(animalsLink);
 
-  // 🔧 Admin-lenker
+  
   if (isLoggedIn()) {
     const dashboardLink = document.createElement("li");
-    dashboardLink.innerHTML = `<a href="/admin/dashboard.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition text-sm">🛠️ Dashboard</a>`;
+    dashboardLink.innerHTML = `<a href="/admin/dashboard.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition text-sm"
+    >🛠️ Dashboard
+    </a>
+    `;
 
     const createLink = document.createElement("li");
     createLink.innerHTML = `<a href="/pet/create.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition text-sm"
-    >➕ Legg til dyr</a>
+    >➕ Legg til dyr
+    </a>
     `;
 
     navLinks.appendChild(dashboardLink);
@@ -79,12 +83,11 @@ export function createNavbar() {
    `;
 
    navLinks.appendChild(loginLink);
-
+  }
 
   container.appendChild(topRow);
   container.appendChild(navLinks); 
   nav.appendChild(container);
 
   return nav;
-}
 }

@@ -36,17 +36,18 @@ export function setupHome(app) {
     const paw = document.createElement("img");
     paw.src = pawImage;
     paw.alt = "Poteavtrykk";
-
+  
     const topOffset = 10 + i * 10 + Math.floor(Math.random() * 6); // Varierende høyde
+    const leftOffset = 10 + i * 12;
     const rotate = Math.floor(Math.random() * 40) - 20;
     const delay = (i * 1.4).toFixed(1);
-
-    paw.className = `
-      absolute w-16 opacity-90 animate-pawMove pointer-events-none
-      left-[${10 + i * 12}%] top-[${topOffset}%]
-    `;
+  
+    paw.className = "animate-pawMove absolute w-12 opacity-60 pointer-events-none";
+    paw.style.top = `${topOffset}%`;
+    paw.style.left = `${leftOffset}%`;
     paw.style.transform = `rotate(${rotate}deg)`;
     paw.style.animationDelay = `${delay}s`;
+  
     pawContainer.appendChild(paw);
   }
 
