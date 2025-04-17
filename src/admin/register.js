@@ -2,8 +2,9 @@ import { saveToken, saveUserInfo } from "../utils/auth.js";
 
 export function setupRegister(app) {
   app.innerHTML = `
-    <div class="max-w-md mx-auto bg-white p-6 rounded shadow mt-12 border border-black">
-      <h1 class="text-2xl font-bold mb-4 text-center text-black">Registrer deg</h1>
+  <div class="mt-[260px] bg-green-600 min-h-screen py-10 px-4">
+    <div class="max-w-md mx-auto bg-white p-6 sm:p-8 rounded shadow-md border border-black">
+      <h1 class="text-2xl sm:text-3xl font-bold mb-6 text-center text-black">Registrer deg</h1>
 
       <form id="register-form" class="space-y-4">
         <input 
@@ -40,7 +41,8 @@ export function setupRegister(app) {
 
       <p id="register-error" class="text-red-600 mt-4 text-center hidden"></p>
     </div>
-  `;
+  </div>
+`;
 
   const form = document.getElementById("register-form");
   const errorMsg = document.getElementById("register-error");

@@ -9,17 +9,18 @@ export async function setupDashboard(app) {
   const userEmail = localStorage.getItem("email") || "Ukjent e-post";
 
   app.innerHTML = `
-    <div class="w-full mt-20 min-h-screen rounded-lg bg-green-700 text-white px-4 py-8">
-      <div class="max-w-7xl mx-auto">
-        <h1 class="text-4xl font-bold mb-2">Admin Dashboard</h1>
-        <p class="mb-8">Velkommen, <strong>${userName}</strong><br>
-          <span class="text-sm text-white-200">Admin user mail: ${userEmail}</span>
-        </p>
+ <div class="pt-[90px] bg-green-600 min-h-screen px-4 pb-10">
+    <div class="max-w-7xl mx-auto bg-white text-black p-6 sm:p-10 rounded shadow-lg">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-2 text-green-800">Admin Dashboard</h1>
+      <p class="mb-6 text-sm sm:text-base">
+        Velkommen, <strong>${userName}</strong><br>
+        <span class="text-gray-700">Innlogget e-post: ${userEmail}</span>
+      </p>
 
-       <div id="admin-pet-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"></div>
-      </div>
+      <div id="admin-pet-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
     </div>
-  `;
+  </div>
+`;
 
   const petListContainer = document.getElementById("admin-pet-list");
 
@@ -33,7 +34,7 @@ export async function setupDashboard(app) {
 
     pets.forEach((pet) => {
       const card = document.createElement("div");
-      card.className = "bg-green-600 border border-green-400 rounded-xl p-4 shadow-md";
+      card.className = "bg-green-100 border border-green-300 rounded-xl p-4 shadow hover:shadow-lg transition";
 
       card.innerHTML = `
   <div class="flex flex-col gap-2">

@@ -20,30 +20,37 @@ export async function setupEditForm(app) {
     const userEmail = localStorage.getItem("email") || "";
 
     app.innerHTML = `
-      <div class="mt-[280px] max-w-6xl mx-auto bg-green-600 text-white p-10 rounded shadow-lg">
-      <h1 class="text-1xl font-bold mb-2">Merk: Man kan kun redigere og slette kjæledyr som er opprettet av 
-      den innloggede admin-brukeren, pga. eierskapsbegrensninger i Noroff API v2.</h1>  
-      <h1 class="text-3xl font-bold mt-6 mb-2">✏️ Rediger: ${pet.name}</h1>
+    <div class="mt-[260px] bg-green-600 min-h-screen py-10 px-4">
+      <div class="max-w-3xl mx-auto bg-white text-black p-6 sm:p-10 rounded shadow-lg">
+        <h1 class="text-base sm:text-lg font-bold mb-4 text-red-700">
+          ⚠️ Merk: Man kan kun redigere og slette kjæledyr som er opprettet av den innloggede admin-brukeren, pga. eierskapsbegrensninger i Noroff API v2.
+        </h1>
+  
+        <h2 class="text-3xl font-bold mt-6 mb-2 text-green-800">✏️ Rediger: ${pet.name}</h2>
         <p class="text-sm mb-1">Innlogget som <strong>${userName}</strong></p>
-        <p class="text-sm mb-4">Innlogget email:<strong>${userEmail}</strong></p>
-        <img src="${pet.image?.url || ''}" alt="${pet.image?.alt || pet.name}" class="w-full max-h-64 object-cover rounded mb-6 border-4 border-white shadow" />
-
+        <p class="text-sm mb-4">Innlogget email: <strong>${userEmail}</strong></p>
+  
+        <img src="${pet.image?.url || ''}" alt="${pet.image?.alt || pet.name}" 
+          class="w-full max-h-64 object-cover rounded mb-6 border-4 border-green-700 shadow" 
+        />
+  
         <form id="edit-form" class="space-y-4">
-          <input type="text" name="name" value="${pet.name}" placeholder="Navn" class="w-full border p-2 rounded text-black" required />
-          <input type="text" name="species" value="${pet.species}" placeholder="Art" class="w-full border p-2 rounded text-black" required />
-          <input type="text" name="breed" value="${pet.breed}" placeholder="Rase" class="w-full border p-2 rounded text-black" required />
-          <input type="number" name="age" value="${pet.age}" placeholder="Alder" class="w-full border p-2 rounded text-black" required />
-          <input type="text" name="size" value="${pet.size}" placeholder="Størrelse" class="w-full border p-2 rounded text-black" required />
-          <input type="text" name="color" value="${pet.color}" placeholder="Farge" class="w-full border p-2 rounded text-black" required />
-          <textarea name="description" placeholder="Beskrivelse" class="w-full border p-2 rounded text-black">${pet.description}</textarea>
-          <input type="text" name="imageUrl" value="${pet.image?.url}" placeholder="Bilde-URL" class="w-full border p-2 rounded text-black" />
-
-          <button type="submit" class="bg-orange-500 text-white-700 font-bold px-6 py-2 rounded hover:bg-orange-500 transition mt-4">
+          <input type="text" name="name" value="${pet.name}" placeholder="Navn" class="w-full border p-2 rounded" required />
+          <input type="text" name="species" value="${pet.species}" placeholder="Art" class="w-full border p-2 rounded" required />
+          <input type="text" name="breed" value="${pet.breed}" placeholder="Rase" class="w-full border p-2 rounded" required />
+          <input type="number" name="age" value="${pet.age}" placeholder="Alder" class="w-full border p-2 rounded" required />
+          <input type="text" name="size" value="${pet.size}" placeholder="Størrelse" class="w-full border p-2 rounded" required />
+          <input type="text" name="color" value="${pet.color}" placeholder="Farge" class="w-full border p-2 rounded" required />
+          <textarea name="description" placeholder="Beskrivelse" class="w-full border p-2 rounded">${pet.description}</textarea>
+          <input type="text" name="imageUrl" value="${pet.image?.url}" placeholder="Bilde-URL" class="w-full border p-2 rounded" />
+  
+          <button type="submit" class="bg-orange-600 text-white font-bold px-6 py-2 rounded-full hover:bg-orange-700 transition mt-4">
             Lagre endringer
           </button>
         </form>
       </div>
-    `;
+    </div>
+  `;
 
     const form = document.getElementById("edit-form");
 

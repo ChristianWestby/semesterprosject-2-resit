@@ -8,6 +8,13 @@ html, body {
   padding: 0;
 }
 
+
+#app {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
 @keyframes pawMove {
   0% { transform: translateX(-10vw); opacity: 0; }
   10% { opacity: 1; }
