@@ -17,7 +17,7 @@ export async function setupSingleProduct(app) {
      <div class="max-w-4xl mx-auto bg-white text-black p-8 border border-black rounded shadow-md">
       
         <div class="flex justify-between items-center mb-6">
-          <h1 class="text-4xl font-bold underline text-gray-800">${pet.name}</h1>
+          <h1 class="text-3xl sm:text-4xl font-bold underline text-gray-800">${pet.name}</h1>
           <button 
             id="shareBtn" 
             class="bg-orange-500 text-white px-4 py-2 rounded-full shadow hover:bg-orange-600 transition text-sm"

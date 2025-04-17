@@ -8,8 +8,6 @@ import { setupEditForm } from './admin/edit.js';
 import { setupRegister } from './admin/register.js';
 import { createNavbar } from './components/navbar.js';
 import { createFooter } from './components/footer.js';
-import { createLogo } from './components/logo.js';
-
 
 const app = document.getElementById('app');
 const path = window.location.pathname;
@@ -19,66 +17,56 @@ if (!app) {
 } else {
   app.innerHTML = "";
 
+ 
+  function renderPageWithLayout(setupFn) {
+    window.scrollTo(0, 0);
+    document.body.insertBefore(createNavbar(), app);
+    setupFn(app);
+    document.body.appendChild(createFooter());
+  }
+
   console.log("Current path:", path);
 
-  // 🔐 Login og Register skal ha logo og hjemlenke – men ikke navbar/footer
-  if (path.includes('/account/login.html') || path.includes('/account/register.html')) {
-    const logoWrapper = document.createElement("div");
-    logoWrapper.className = "flex flex-col items-center mt-6 mb-4";
+  if (path.includes('/account/login.html')) {
+    setupLogin(app);
 
-    const logo = createLogo();
-    logoWrapper.appendChild(logo);
+  } else if (path.includes('/account/register.html')) {
+    setupRegister(app);
 
-    const homeLink = document.createElement("a");
-    homeLink.href = "/";
-    homeLink.textContent = "← Til forsiden";
-    homeLink.className = "mt-2 text-sm text-blue-600 hover:underline";
-    logoWrapper.appendChild(homeLink);
-
-    document.body.insertBefore(logoWrapper, app);
-
-    if (path.includes('/account/login.html')) {
-      setupLogin(app);
-    } else {
-      setupRegister(app);
-    }
-
+  
   } else if (path === '/' || path === '/index.html') {
+    window.scrollTo(0, 0);
     setupHome(app);
     document.body.appendChild(createFooter());
 
+ 
   } else if (
     path === '/pet' ||
     path === '/pet/' ||
     path.endsWith('/pet/index.html')
   ) {
-    document.body.insertBefore(createNavbar(), app);
-    setupPetList(app);
-    document.body.appendChild(createFooter());
+    renderPageWithLayout(setupPetList);
+
 
   } else if (
     path.includes('/pet/detail.html') &&
     window.location.search.includes('id=')
   ) {
-    document.body.insertBefore(createNavbar(), app);
-    setupSingleProduct(app);
-    document.body.appendChild(createFooter());
+    renderPageWithLayout(setupSingleProduct);
+
 
   } else if (path.includes('/pet/edit.html')) {
-    document.body.insertBefore(createNavbar(), app);
-    setupEditForm(app);
-    document.body.appendChild(createFooter());
+    renderPageWithLayout(setupEditForm);
+
 
   } else if (path.includes('/pet/create.html')) {
-    document.body.insertBefore(createNavbar(), app);
-    setupCreatePet(app);
-    document.body.appendChild(createFooter());
+    renderPageWithLayout(setupCreatePet);
+
 
   } else if (path.includes('/admin/dashboard.html')) {
-    document.body.insertBefore(createNavbar(), app);
-    setupDashboard(app);
-    document.body.appendChild(createFooter());
+    renderPageWithLayout(setupDashboard);
 
+  
   } else {
     app.innerHTML = `
       <section class="text-center py-20">

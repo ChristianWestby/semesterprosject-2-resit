@@ -18,7 +18,7 @@ export function createNavbar() {
 
  
   const rightSide = document.createElement("div");
-  rightSide.className = "flex flex-col items-end gap-2 mt-6 mr-2";
+  rightSide.className = "flex flex-col sm:flex-row sm:items-center sm:gap-4 items-end gap-2 mt-6 sm:mt-0 mr-2 sm:mr-0";
 
   if (isLoggedIn()) {
     const name = localStorage.getItem("name") || "bruker";
@@ -47,7 +47,7 @@ export function createNavbar() {
 
 
   const navLinks = document.createElement("ul");
-  navLinks.className = "flex gap-4 justify-center mt-4 text-lg text-black font-medium";
+  navLinks.className = "flex flex-wrap justify-center mt-4 gap-2 sm:gap-4 text-sm sm:text-base md:text-lg text-black font-medium";
 
   const homeLink = document.createElement("li");
   homeLink.innerHTML = `<a href="/index.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition">Home</a>`;
