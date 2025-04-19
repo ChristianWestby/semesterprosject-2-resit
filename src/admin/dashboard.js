@@ -17,7 +17,7 @@ export async function setupDashboard(app) {
           <span class="text-gray-700">Innlogget e-post: ${userEmail}</span>
         </p>
 
-        <h2 class="text-2xl font-semibold mb-4 text-green-700">🐾 Alle kjæledyr</h2>
+        <h2 class="text-2xl font-semibold mb-4 text-green-700">Alle kjæledyr</h2>
         <div id="admin-pet-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
       </div>
     </div>
@@ -39,17 +39,11 @@ export async function setupDashboard(app) {
 
       card.innerHTML = `
         <div class="flex flex-col gap-2">
-          ${pet.image?.url ? `
-            <img 
-              src="${pet.image.url}" 
-              alt="${pet.image.alt || pet.name}" 
-              class="w-full h-40 object-cover rounded"
-            />
-          ` : `
-            <div class="w-full h-40 bg-gray-200 rounded flex items-center justify-center text-gray-500">
-              Ingen bilde
-            </div>
-          `}
+          ${
+            pet.image?.url
+              ? `<img src="${pet.image.url}" alt="${pet.image.alt || pet.name}" class="w-full h-40 object-cover rounded" />`
+              : `<div class="w-full h-40 bg-gray-200 rounded flex items-center justify-center text-gray-500">Ingen bilde</div>`
+          }
           <h2 class="text-xl font-bold">${pet.name}</h2>
           <p class="text-sm">${pet.breed} | ${pet.species}</p>
         </div>
@@ -93,6 +87,6 @@ export async function setupDashboard(app) {
 
   } catch (err) {
     console.error("Feil ved henting av kjæledyr:", err);
-    app.innerHTML = "<p class='text-red-600 text-center mt-12'>Kunne ikke laste inn kjæledyr.</p>";
+    app.innerHTML = `<p class="text-red-600 text-center mt-12">Kunne ikke laste inn kjæledyr.</p>`;
   }
 }

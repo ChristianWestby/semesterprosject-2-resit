@@ -5,8 +5,6 @@ export function setupLogin(app) {
   app.innerHTML = `
     <div class="min-h-screen bg-green-600 flex items-center justify-center px-4 py-20">
       <div class="max-w-md w-full bg-white text-black p-6 sm:p-8 rounded shadow-md border border-black text-center">
-        
-        <!-- 🐾 Logo -->
         <div class="mb-6 flex justify-center">
           ${createLogo().innerHTML}
         </div>
@@ -20,8 +18,7 @@ export function setupLogin(app) {
               type="email" 
               name="email" 
               class="w-full p-2 mt-1 border-2 border-black rounded text-black bg-white" 
-              required 
-              value="christian42@noroff.no"
+              required
             />
           </label>
 
@@ -43,12 +40,18 @@ export function setupLogin(app) {
           </button>
         </form>
 
-        <!-- 🏠 Til forsiden-knapp -->
+        <a 
+          href="/account/register.html" 
+          class="block mt-4 text-sm text-blue-600 hover:underline text-center"
+        >
+          Ny bruker? Registrer deg her
+        </a>
+
         <a 
           href="/" 
           class="mt-6 inline-block bg-orange-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-orange-600 transition"
         >
-          ← Til forsiden
+          Til forsiden
         </a>
 
         <p id="login-error" class="mt-4 text-center text-red-600 hidden"></p>
@@ -82,7 +85,6 @@ export function setupLogin(app) {
       saveUserInfo({ name: data.name, email: data.email });
 
       window.location.href = "/admin/dashboard.html";
-
     } catch (err) {
       console.error(err);
       errorMsg.textContent = err.message || "Innlogging feilet.";

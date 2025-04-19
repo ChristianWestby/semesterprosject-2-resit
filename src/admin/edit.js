@@ -3,7 +3,7 @@ import { getToken, protectRoute } from "../utils/auth.js";
 import { getAuthHeaders } from "../utils/api.js";
 
 export async function setupEditForm(app) {
-  protectRoute(); 
+  protectRoute();
 
   const token = getToken();
   const params = new URLSearchParams(window.location.search);
@@ -20,37 +20,37 @@ export async function setupEditForm(app) {
     const userEmail = localStorage.getItem("email") || "";
 
     app.innerHTML = `
-    <div class="mt-[260px] bg-green-600 min-h-screen py-10 px-4">
-      <div class="max-w-3xl mx-auto bg-white text-black p-6 sm:p-10 rounded shadow-lg">
-        <h1 class="text-base sm:text-lg font-bold mb-4 text-red-700">
-          ⚠️ Merk: Man kan kun redigere og slette kjæledyr som er opprettet av den innloggede admin-brukeren, pga. eierskapsbegrensninger i Noroff API v2.
-        </h1>
-  
-        <h2 class="text-3xl font-bold mt-6 mb-2 text-green-800">✏️ Rediger: ${pet.name}</h2>
-        <p class="text-sm mb-1">Innlogget som <strong>${userName}</strong></p>
-        <p class="text-sm mb-4">Innlogget email: <strong>${userEmail}</strong></p>
-  
-        <img src="${pet.image?.url || ''}" alt="${pet.image?.alt || pet.name}" 
-          class="w-full max-h-64 object-cover rounded mb-6 border-4 border-green-700 shadow" 
-        />
-  
-        <form id="edit-form" class="space-y-4">
-          <input type="text" name="name" value="${pet.name}" placeholder="Navn" class="w-full border p-2 rounded" required />
-          <input type="text" name="species" value="${pet.species}" placeholder="Art" class="w-full border p-2 rounded" required />
-          <input type="text" name="breed" value="${pet.breed}" placeholder="Rase" class="w-full border p-2 rounded" required />
-          <input type="number" name="age" value="${pet.age}" placeholder="Alder" class="w-full border p-2 rounded" required />
-          <input type="text" name="size" value="${pet.size}" placeholder="Størrelse" class="w-full border p-2 rounded" required />
-          <input type="text" name="color" value="${pet.color}" placeholder="Farge" class="w-full border p-2 rounded" required />
-          <textarea name="description" placeholder="Beskrivelse" class="w-full border p-2 rounded">${pet.description}</textarea>
-          <input type="text" name="imageUrl" value="${pet.image?.url}" placeholder="Bilde-URL" class="w-full border p-2 rounded" />
-  
-          <button type="submit" class="bg-orange-600 text-white font-bold px-6 py-2 rounded-full hover:bg-orange-700 transition mt-4">
-            Lagre endringer
-          </button>
-        </form>
+      <div class="mt-[260px] bg-green-600 min-h-screen py-10 px-4">
+        <div class="max-w-3xl mx-auto bg-white text-black p-6 sm:p-10 rounded shadow-lg">
+          <h1 class="text-base sm:text-lg font-bold mb-4 text-red-700">
+            Merk: Man kan kun redigere og slette kjæledyr som er opprettet av den innloggede admin-brukeren, på grunn av eierskapsbegrensninger i Noroff API v2.
+          </h1>
+
+          <h2 class="text-3xl font-bold mt-6 mb-2 text-green-800">Rediger: ${pet.name}</h2>
+          <p class="text-sm mb-1">Innlogget som <strong>${userName}</strong></p>
+          <p class="text-sm mb-4">Innlogget e-post: <strong>${userEmail}</strong></p>
+
+          <img src="${pet.image?.url || ''}" alt="${pet.image?.alt || pet.name}" 
+            class="w-full max-h-64 object-cover rounded mb-6 border-4 border-green-700 shadow" 
+          />
+
+          <form id="edit-form" class="space-y-4">
+            <input type="text" name="name" value="${pet.name}" placeholder="Navn" class="w-full border p-2 rounded" required />
+            <input type="text" name="species" value="${pet.species}" placeholder="Art" class="w-full border p-2 rounded" required />
+            <input type="text" name="breed" value="${pet.breed}" placeholder="Rase" class="w-full border p-2 rounded" required />
+            <input type="number" name="age" value="${pet.age}" placeholder="Alder" class="w-full border p-2 rounded" required />
+            <input type="text" name="size" value="${pet.size}" placeholder="Størrelse" class="w-full border p-2 rounded" required />
+            <input type="text" name="color" value="${pet.color}" placeholder="Farge" class="w-full border p-2 rounded" required />
+            <textarea name="description" placeholder="Beskrivelse" class="w-full border p-2 rounded">${pet.description}</textarea>
+            <input type="text" name="imageUrl" value="${pet.image?.url}" placeholder="Bilde-URL" class="w-full border p-2 rounded" />
+
+            <button type="submit" class="bg-orange-600 text-white font-bold px-6 py-2 rounded-full hover:bg-orange-700 transition mt-4">
+              Lagre endringer
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
-  `;
+    `;
 
     const form = document.getElementById("edit-form");
 
@@ -80,9 +80,8 @@ export async function setupEditForm(app) {
 
         if (!res.ok) throw new Error("Oppdatering feilet");
 
-        alert("✅ Kjæledyr oppdatert!");
+        alert("Kjæledyr oppdatert!");
         window.location.href = "/admin/dashboard.html";
-
       } catch (error) {
         console.error("Feil under oppdatering:", error);
         alert("Kunne ikke oppdatere kjæledyret.");
@@ -91,6 +90,6 @@ export async function setupEditForm(app) {
 
   } catch (err) {
     console.error("Feil under henting:", err);
-    app.innerHTML = "<p class='text-red-600 text-center mt-12'>Kunne ikke laste inn kjæledyret.</p>";
+    app.innerHTML = `<p class="text-red-600 text-center mt-12">Kunne ikke laste inn kjæledyret.</p>`;
   }
 }

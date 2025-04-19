@@ -6,7 +6,7 @@ export function createNavbar() {
   nav.className = "fixed top-0 left-0 w-full z-50 bg-[#F2EFE7] border-b-2 border-black shadow";
 
   const container = document.createElement("div");
-  container.className = "max-w-7xl mx-auto px-4 sm:px-6 py-10"; // ← høyere navbar
+  container.className = "max-w-7xl mx-auto px-4 sm:px-6 py-10";
 
   const topRow = document.createElement("div");
   topRow.className = "flex flex-col sm:flex-row justify-between sm:items-center gap-2";

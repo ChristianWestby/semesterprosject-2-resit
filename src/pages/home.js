@@ -29,7 +29,7 @@ export function setupHome(app) {
     </section>
   `;
 
-  // 🐾 Pote-animasjoner
+
   const pawContainer = document.getElementById("pawContainer");
   for (let i = 0; i < 6; i++) {
     const paw = document.createElement("img");
@@ -50,7 +50,7 @@ export function setupHome(app) {
     pawContainer.appendChild(paw);
   }
 
-  // 🎯 Klikk på hero eller knapp navigerer til dyresiden
+
   const hero = document.getElementById("heroSection");
   const button = document.getElementById("heroButton");
 
@@ -59,7 +59,7 @@ export function setupHome(app) {
   });
 
   button.addEventListener("click", (e) => {
-    e.stopPropagation(); // Hindrer at hero-click også trigges
+    e.stopPropagation(); 
     window.location.href = "/pet/index.html";
   });
 }
