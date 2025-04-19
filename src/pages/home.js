@@ -16,7 +16,9 @@ export function setupHome(app) {
         <h1 class="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 leading-snug">
           Velkommen til <br> Pet Adoption Shelter
         </h1>
-        <p class="text-sm sm:text-lg mb-6">Vi er her for å hjelpe deg med å finne din venn</p>
+        <p class="text-sm sm:text-lg mb-6">
+          Vi er her for å hjelpe deg med å finne din venn
+        </p>
         <button 
           id="heroButton"
           class="bg-white text-black px-4 py-2 sm:px-6 sm:py-3 rounded-full font-semibold hover:bg-gray-200 transition"
@@ -27,27 +29,28 @@ export function setupHome(app) {
     </section>
   `;
 
+  // 🐾 Pote-animasjoner
   const pawContainer = document.getElementById("pawContainer");
-
   for (let i = 0; i < 6; i++) {
     const paw = document.createElement("img");
     paw.src = pawImage;
     paw.alt = "Poteavtrykk";
-  
-    const topOffset = 10 + i * 10 + Math.floor(Math.random() * 6); 
+
+    const topOffset = 10 + i * 10 + Math.floor(Math.random() * 6);
     const leftOffset = 10 + i * 12;
     const rotate = Math.floor(Math.random() * 40) - 20;
     const delay = (i * 1.4).toFixed(1);
-  
+
     paw.className = "animate-pawMove absolute w-12 opacity-60 pointer-events-none";
     paw.style.top = `${topOffset}%`;
     paw.style.left = `${leftOffset}%`;
     paw.style.transform = `rotate(${rotate}deg)`;
     paw.style.animationDelay = `${delay}s`;
-  
+
     pawContainer.appendChild(paw);
   }
 
+  // 🎯 Klikk på hero eller knapp navigerer til dyresiden
   const hero = document.getElementById("heroSection");
   const button = document.getElementById("heroButton");
 
@@ -56,7 +59,7 @@ export function setupHome(app) {
   });
 
   button.addEventListener("click", (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Hindrer at hero-click også trigges
     window.location.href = "/pet/index.html";
   });
 }
