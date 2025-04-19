@@ -9,17 +9,12 @@ export function createPetCard(pet) {
         alt="${pet.image?.alt || pet.name}" 
         class="w-full h-48 object-cover"
       />
-      
-      <!-- Bakgrunn med gjennomsiktig mørk overlay -->
       <div class="absolute inset-0 bg-black opacity-30"></div>
-
-      <!-- Tekst-innhold med høyere z-index -->
       <div class="relative p-4 text-white z-10">
         <h2 class="text-xl font-bold mb-1">${pet.name}</h2>
         <p class="text-sm"><strong>Art:</strong> ${pet.species}</p>
         <p class="text-sm"><strong>Rase:</strong> ${pet.breed}</p>
         <p class="text-sm"><strong>Alder:</strong> ${pet.age}</p>
-
         <a 
           href="/pet/detail.html?id=${pet.id}" 
           class="mt-4 inline-block text-sm underline text-white hover:text-gray-200"

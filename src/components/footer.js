@@ -19,22 +19,28 @@ export function createFooter() {
   linksWrapper.className = "md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-6 justify-center";
 
   const mediaContainer = document.createElement("div");
-  mediaContainer.innerHTML = `<h3 class="text-white font-semibold mb-2">Følg oss</h3>`;
+  const mediaTitle = document.createElement("h3");
+  mediaTitle.className = "text-white font-semibold mb-2";
+  mediaTitle.textContent = "Følg oss";
+  mediaContainer.appendChild(mediaTitle);
   mediaLinks.forEach(link => {
     const a = document.createElement("a");
     a.href = "#";
     a.textContent = link;
-    a.className = "block text-sm hover:underline text-white space-y-2";
+    a.className = "block text-sm hover:underline text-white";
     mediaContainer.appendChild(a);
   });
 
   const infoContainer = document.createElement("div");
-  infoContainer.innerHTML = `<h3 class="text-white font-semibold mb-2">Om oss</h3>`;
+  const infoTitle = document.createElement("h3");
+  infoTitle.className = "text-white font-semibold mb-2";
+  infoTitle.textContent = "Om oss";
+  infoContainer.appendChild(infoTitle);
   infoLinks.forEach(link => {
     const a = document.createElement("a");
     a.href = "#";
     a.textContent = link;
-    a.className = "block text-sm hover:underline text-white space-y-2";
+    a.className = "block text-sm hover:underline text-white";
     infoContainer.appendChild(a);
   });
 

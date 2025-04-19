@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'authToken';
+const TOKEN_KEY = "authToken";
 
 export function saveToken(token) {
   localStorage.setItem(TOKEN_KEY, token);
@@ -18,14 +18,13 @@ export function isLoggedIn() {
   return !!getToken();
 }
 
-// 👇 Legg til dette nederst
 export function saveUserInfo({ name, email }) {
   localStorage.setItem("name", name);
   localStorage.setItem("email", email);
 }
 
 export function protectRoute(redirectTo = "/account/login.html") {
-    if (!isLoggedIn()) {
-      window.location.href = redirectTo;
-    }
+  if (!isLoggedIn()) {
+    window.location.href = redirectTo;
   }
+}

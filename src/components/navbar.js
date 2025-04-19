@@ -3,29 +3,29 @@ import { createLogo } from "./logo.js";
 
 export function createNavbar() {
   const nav = document.createElement("nav");
-  nav.className = "fixed top-0 left-0 w-full h-[260px] z-50 bg-[#F2EFE7] border-b-2 border-black shadow";
+  nav.className = "fixed top-0 left-0 w-full z-50 bg-[#F2EFE7] border-b-2 border-black shadow";
 
   const container = document.createElement("div");
-  container.className = "max-w-7xl mx-auto px-6 h-full flex flex-col justify-center";
-
+  container.className = "max-w-7xl mx-auto px-4 sm:px-6 py-10";
 
   const topRow = document.createElement("div");
-  topRow.className = "flex justify-between items-start";
-
+  topRow.className = "flex flex-col sm:flex-row justify-between sm:items-center gap-2";
 
   const logo = createLogo();
-  logo.classList.add("w-auto", "drop-shadow-lg", "mt-10", "ml-2");
+  logo.classList.add("w-auto", "drop-shadow-lg", "mt-2", "sm:mt-0", "ml-2");
 
- 
   const rightSide = document.createElement("div");
-  rightSide.className = "flex flex-col sm:flex-row sm:items-center sm:gap-4 items-end gap-2 mt-6 sm:mt-0 mr-2 sm:mr-0";
+  rightSide.className = "flex flex-col items-center sm:flex-row sm:items-center gap-1 sm:gap-4 w-full sm:w-auto";
 
   if (isLoggedIn()) {
     const name = localStorage.getItem("name") || "bruker";
 
     const userBox = document.createElement("div");
-    userBox.innerHTML = `<span class="block">Admin user:</span><span class="block">${name}</span>`;
-    userBox.className = "bg-black text-white font-bold px-4 py-2 rounded shadow text-sm text-right";
+    userBox.innerHTML = `
+      <span class="block text-xs sm:text-sm">Admin user:</span>
+      <span class="block text-xs sm:text-sm">${name}</span>
+    `;
+    userBox.className = "bg-black text-white font-bold px-3 py-1 rounded shadow text-center w-full sm:w-auto";
 
     const logoutBtn = document.createElement("button");
     logoutBtn.textContent = "Logg ut";
@@ -45,48 +45,44 @@ export function createNavbar() {
   topRow.appendChild(logo);
   topRow.appendChild(rightSide);
 
+  const burgerBtn = document.createElement("button");
+  burgerBtn.className = "sm:hidden bg-green-700 text-white px-4 py-2 rounded shadow hover:bg-green-800 mt-2";
+  burgerBtn.textContent = "☰ Meny";
+  burgerBtn.setAttribute("aria-expanded", "false");
 
   const navLinks = document.createElement("ul");
-  navLinks.className = "flex flex-wrap justify-center mt-4 gap-2 sm:gap-4 text-sm sm:text-base md:text-lg text-black font-medium";
+  navLinks.className = "hidden sm:flex flex-wrap justify-center mt-2 sm:mt-0 gap-3 sm:gap-4 text-xs sm:text-sm md:text-base text-black font-medium";
 
-  const homeLink = document.createElement("li");
-  homeLink.innerHTML = `<a href="/index.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition">Home</a>`;
+  const toggleNav = () => {
+    const expanded = burgerBtn.getAttribute("aria-expanded") === "true";
+    burgerBtn.setAttribute("aria-expanded", !expanded);
+    navLinks.classList.toggle("hidden");
+    navLinks.classList.toggle("flex");
+    navLinks.classList.toggle("flex-col");
+    navLinks.classList.toggle("items-center");
+    navLinks.classList.toggle("gap-5");
+    navLinks.classList.toggle("mt-4");
+    navLinks.classList.toggle("pb-4");
+  };
+  burgerBtn.addEventListener("click", toggleNav);
 
-  const animalsLink = document.createElement("li");
-  animalsLink.innerHTML = `<a href="/pet/index.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition">Dyrene våre</a>`;
+  const links = [];
 
-  navLinks.appendChild(homeLink);
-  navLinks.appendChild(animalsLink);
+  links.push(`<li><a href="/index.html" class="block bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition w-44 text-center">Home</a></li>`);
+  links.push(`<li><a href="/pet/index.html" class="block bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition w-44 text-center">Dyrene våre</a></li>`);
 
-  
   if (isLoggedIn()) {
-    const dashboardLink = document.createElement("li");
-    dashboardLink.innerHTML = `<a href="/admin/dashboard.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition text-sm"
-    >🛠️ Dashboard
-    </a>
-    `;
-
-    const createLink = document.createElement("li");
-    createLink.innerHTML = `<a href="/pet/create.html" class="bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition text-sm"
-    >➕ Legg til dyr
-    </a>
-    `;
-
-    navLinks.appendChild(dashboardLink);
-    navLinks.appendChild(createLink);
+    links.push(`<li><a href="/admin/dashboard.html" class="block bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition w-44 text-center">🛠️ Dashboard</a></li>`);
+    links.push(`<li><a href="/pet/create.html" class="block bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-green-700 transition w-44 text-center">➕ Legg til dyr</a></li>`);
   } else {
-   
-    const loginLink = document.createElement("li");
-    loginLink.innerHTML = `<a href="/account/login.html" class="ml-auto bg-green-600 text-white px-6 py-2 rounded-full shadow hover:bg-red-700 transition text-sm font-semibold">
-    Login
-    </a>
-   `;
-
-   navLinks.appendChild(loginLink);
+    links.push(`<li><a href="/account/login.html" class="block bg-green-600 text-white px-4 py-2 rounded-full shadow hover:bg-red-700 transition font-semibold w-44 text-center">Login</a></li>`);
   }
 
+  navLinks.innerHTML = links.join("");
+
   container.appendChild(topRow);
-  container.appendChild(navLinks); 
+  container.appendChild(burgerBtn);
+  container.appendChild(navLinks);
   nav.appendChild(container);
 
   return nav;
