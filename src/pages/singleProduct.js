@@ -49,7 +49,7 @@ export async function setupSingleProduct(app) {
             onclick="window.history.back()" 
             class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition"
           >
-            ← Tilbake til listen
+            Tilbake til listen
           </button>
         </div>
       </div>

@@ -4,29 +4,26 @@ export function setupHome(app) {
   app.innerHTML = `
     <section 
       id="heroSection"
-      class="relative w-full h-screen bg-green-600 flex flex-col items-center justify-center text-center text-white px-4 overflow-hidden cursor-pointer"
+      class="relative w-full min-h-screen bg-green-600 flex flex-col items-center justify-center text-center text-white px-4 sm:px-6 overflow-hidden cursor-pointer"
       tabindex="0"
       role="link"
       aria-label="Klikk for å se kjæledyr"
     >
       <div class="absolute inset-0 bg-black opacity-10 z-0"></div>
-
-    
       <div id="pawContainer" class="absolute inset-0 z-0 pointer-events-none"></div>
 
-      
-      <div class="relative z-10 px-4 sm:px-6 py-6 max-w-md sm:max-w-xl fade-in">
-  <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-    Velkommen til <br> Pet Adoption Shelter
-  </h1>
-  <p class="text-base sm:text-lg mb-6">Vi er her for å hjelpe deg med å finne din venn</p>
-  <button 
-    id="heroButton"
-    class="bg-white text-black px-4 py-2 sm:px-6 sm:py-3 rounded hover:bg-gray-200 transition"
-  >
-    Se kjæledyr
-  </button>
-</div>
+      <div class="relative z-10 px-2 sm:px-6 py-8 max-w-sm sm:max-w-xl fade-in">
+        <h1 class="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 leading-snug">
+          Velkommen til <br> Pet Adoption Shelter
+        </h1>
+        <p class="text-sm sm:text-lg mb-6">Vi er her for å hjelpe deg med å finne din venn</p>
+        <button 
+          id="heroButton"
+          class="bg-white text-black px-4 py-2 sm:px-6 sm:py-3 rounded-full font-semibold hover:bg-gray-200 transition"
+        >
+          Se kjæledyr
+        </button>
+      </div>
     </section>
   `;
 
