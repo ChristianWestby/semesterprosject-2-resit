@@ -2,9 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Behold kun layout-styling her */
-.pet-list {
-  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+
+#app {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+@keyframes pawMove {
+  0% { transform: translateX(-10vw); opacity: 0; }
+  10% { opacity: 1; }
+  90% { transform: translateX(110vw); opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.animate-pawMove {
+  animation: pawMove 30s linear infinite;
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 50px;
+  opacity: 0.3;
+  z-index: 10;
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 1.5s ease-out both;
 }
 
 .pet-item {
