@@ -10,26 +10,27 @@ export function setupCreatePet(app) {
         <h1 class="text-3xl font-bold mb-6 text-green-800 text-center">Legg til nytt kjæledyr</h1>
 
         <form id="create-form" class="space-y-4">
-          <input type="text" name="name" placeholder="Navn" class="w-full border p-2 rounded" required />
-          <input type="text" name="species" placeholder="Art" class="w-full border p-2 rounded" required />
-          <input type="text" name="breed" placeholder="Rase" class="w-full border p-2 rounded" required />
-          <input type="number" name="age" placeholder="Alder" class="w-full border p-2 rounded" required />
-
-          <select name="gender" class="w-full border p-2 rounded" required>
+          <input type="text" name="name" placeholder="Navn" class="w-full border border-black p-2 rounded" required />
+          <input type="text" name="species" placeholder="Art" class="w-full border border-black p-2 rounded" required />
+          <input type="text" name="breed" placeholder="Rase" class="w-full border border-black p-2 rounded" required />
+          <input type="number" name="age" placeholder="Alder" class="w-full border border-black p-2 rounded" required />
+          
+          <select name="gender" class="w-full border border-black p-2 rounded" required>
             <option value="">Velg kjønn</option>
             <option value="male">Hann</option>
             <option value="female">Hunn</option>
           </select>
+          
+          <input type="text" name="size" placeholder="Størrelse" class="w-full border border-black p-2 rounded" required />
+          <input type="text" name="color" placeholder="Farge" class="w-full border border-black p-2 rounded" required />
+          <input type="text" name="location" placeholder="Plassering" class="w-full border border-black p-2 rounded" required />
+          
+          <textarea name="description" placeholder="Beskrivelse" class="w-full border border-black p-2 rounded"></textarea>
+          <input type="text" name="imageUrl" placeholder="Bilde-URL" class="w-full border border-black p-2 rounded" />
 
-          <input type="text" name="size" placeholder="Størrelse" class="w-full border p-2 rounded" required />
-          <input type="text" name="color" placeholder="Farge" class="w-full border p-2 rounded" required />
-          <input type="text" name="location" placeholder="Plassering" class="w-full border p-2 rounded" required />
-          <textarea name="description" placeholder="Beskrivelse" class="w-full border p-2 rounded"></textarea>
-          <input type="text" name="imageUrl" placeholder="Bilde-URL" class="w-full border p-2 rounded" />
-
-         <button type="submit" class="bg-orange-600 text-white font-bold px-6 py-2 rounded-full hover:bg-orange-700 transition mt-4">
-          🐶 Opprett kjæledyr
-         </button>
+          <button type="submit" class="bg-orange-600 text-white font-bold px-6 py-2 rounded-full hover:bg-orange-700 transition mt-4">
+            🐶 Opprett kjæledyr
+          </button>
         </form>
       </div>
     </div>
@@ -65,7 +66,9 @@ export function setupCreatePet(app) {
 
       const result = await res.json();
 
-      if (!res.ok) throw new Error(result.errors?.[0]?.message || "Oppretting feilet");
+      if (!res.ok) {
+        throw new Error(result.errors?.[0]?.message || "Oppretting feilet");
+      }
 
       alert("Kjæledyr opprettet!");
       setTimeout(() => {

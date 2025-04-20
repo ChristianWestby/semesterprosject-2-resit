@@ -9,7 +9,7 @@ export async function setupDashboard(app) {
   const userEmail = localStorage.getItem("email") || "Ukjent e-post";
 
   app.innerHTML = `
-    <div class="pt-[160px] bg-green-600 min-h-screen px-4 pb-10">
+    <div class="pt-[210px] bg-green-600 min-h-screen px-4 pb-10">
       <div class="max-w-7xl mx-auto bg-white text-black p-6 sm:p-10 rounded shadow-lg">
         <h1 class="text-3xl sm:text-4xl font-bold mb-2 text-green-800">Admin Dashboard</h1>
         <p class="mb-6 text-sm sm:text-base">

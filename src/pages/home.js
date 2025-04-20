@@ -17,11 +17,11 @@ export function setupHome(app) {
           Velkommen til <br> Pet Adoption Shelter
         </h1>
         <p class="text-sm sm:text-lg mb-6">
-          Vi er her for å hjelpe deg med å finne din venn
+          Vi er her for å hjelpe deg med å finne din nye venn
         </p>
         <button 
           id="heroButton"
-          class="bg-white text-black px-4 py-2 sm:px-6 sm:py-3 rounded-full font-semibold hover:bg-gray-200 transition"
+          class="bg-white text-black px-4 py-2 sm:px-6 sm:py-3 rounded-full font-semibold hover:bg-gray-600 transition"
         >
           Se kjæledyr
         </button>
